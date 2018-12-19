@@ -1,0 +1,18 @@
+{
+  "/musicqq": {
+    "target": "https://c.y.qq.com",
+    "pathRewrite": {
+      "^/musicqq": ""
+    },
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/musicbd": {
+    "target": "https://musicapi.taihe.com",
+    "pathRewrite": {
+      "^/musicbd": ""
+    },
+    "secure": false,
+    "changeOrigin": true
+  }
+}
