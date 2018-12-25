@@ -1,13 +1,14 @@
 <div class="heroes-wrapper">
   <ul class="heroes">
-    <li *ngFor="let hero of heroes"
+    <li *ngFor="let hero of heroes; index as i; count as cnt;"
       [class.selected]="hero === selectedHero"
       (click)="onSelect(hero)">
-      <span class="badge">{{hero.id}}</span> {{hero.name}}
+      <span class="badge">{{hero.id}}</span> {{hero.name}} {{i}} {{cnt}}
     </li>
   </ul>
+
   <div class="selectedHero" *ngIf="selectedHero">
-    <app-hero-detail [hero]="selectedHero"></app-hero-detail>
+    <app-hero-detail [hero]="selectedHero" (editRequest)="editHero($event)"></app-hero-detail>
     <br>
     <a routerLink="/heroes/{{selectedHero.id}}">to this hero</a>
   </div>

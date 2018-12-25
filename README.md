@@ -1,6 +1,6 @@
 # AngularDemo
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.x.
 
 ## Development server
 
@@ -26,19 +26,27 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
-##
+# Learning
 
-* 工作空间-根目录名 angular-demo
-  * 端到端测试项目 e2e
-  * 骨架应用项目 src [index.html、main.ts、app/app.module]
-    * 根组件 app-root [app/app.component]
+* angular-demo 工作空间-根目录名
+  * e2e 端到端测试项目
+  * src 骨架应用项目 [index.html、main.ts、app/app.module]
+    * app 根组件 [app/app.component]
+      * app-router.module 路由器
+    * feature 路由页面
+    * components 组件
+    * core 数据/接口
 
-## 命令
-
-``` bash
-ng generate component hero # 创建组件
-ng generate service hero # 创建服务
-```
+  * .editorconfig 编辑器配置文件
+  * .gitignore git忽略提交规则配置文件
+  * .npmrc npm配置文件
+  * angular.json angular编译配置文件
+  * package-lock.json npm锁包文件
+  * package.json 项目描述文件
+  * proxy.conf.json angular设置proxy配置文件
+  * README.md 项目说明文件
+  * tsconfig.json TypeScript编译配置文件
+  * tslint.json TypeScript代码检测规则配置文件
 
 ts (M 中间器，调用 C 去更新 V)
 
@@ -46,47 +54,203 @@ ts (M 中间器，调用 C 去更新 V)
 
 服务 api 数据层 (C)
 
-## 设置 `alias`
+## 设置别名 `alias` (类似 webpack)
 
-`tsconfig.json` 和 `src/tsconfig.app.json`
+[tsconfig.json](http://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
 
-## `@Component`
+[tsconfig.json](https://www.tslang.cn/docs/handbook/tsconfig-json.html)
 
-selector— 组件的选择器（CSS 元素选择器），用来在父组件的模板中匹配 HTML 元素的名称，以识别出该组件。
+[module-resolutio](http://www.typescriptlang.org/docs/handbook/module-resolution.html)
 
-templateUrl— 组件模板文件的位置。
+[module-resolutio](https://www.tslang.cn/docs/handbook/module-resolution.html)
 
-styleUrls— 组件私有 CSS 样式表文件的位置。
+[modules](http://www.typescriptlang.org/docs/handbook/modules.html)
 
-## `NgModel`
+[modules](https://www.tslang.cn/docs/handbook/modules.html)
 
-指令实现了双向数据绑定。
+`baseUrl` + `paths`
 
-## `*ngFor`
+in `tsconfig.json` :
+
+``` bash
+{
+  # ...
+  "compilerOptions": {
+    # This must be specified if "paths" is.
+    "baseUrl": "./",
+    # 此处映射是相对于 "baseUrl"
+    "paths": {
+      "@src/*": [
+        "src/*"
+      ],
+      "@app/*": [
+        "src/app/*"
+      ]
+    },
+  }
+  # ...
+}
+```
+
+## [Component](https://angular.cn/api/core/Component)
+
+selector — 组件的选择器（CSS 元素选择器），用来在父组件的模板中匹配 HTML 元素的名称，以识别出该组件。
+
+templateUrl — 组件模板文件的位置。
+
+styleUrls — 组件私有 CSS 样式表文件的位置。
+
+## 模版语法
+
+### [NgModel](https://angular.cn/api/forms/NgModel)
+
+`[(ngModel)]="property"`
+
+数据双向绑定
+
+### [NgForOf](https://angular.cn/api/common/NgForOf)
+
+`*ngFor="let item of property"`
 
 列表循环
 
-## `*ngIf`
+* 可以使用管道
+* as
+
+* index
+* count
+* first
+* last
+* even
+* odd
+
+trackBy 类似 vue 中 v-for 的 `key` ?
+
+### [NgIf](https://angular.cn/api/common/NgIf)
+
+`*ngIf="property"`
 
 条件判断
 
-## [class.className]
+### [NgSwitch](https://angular.cn/api/common/NgSwitch)
 
-class 类绑定
+switch 语句
 
-## (click)
+### attribute、class 和 style 绑定
 
-事件绑定
+`[attr.attrName]="property"`
+
+`[class.className]="property"`
+
+`[style.styleName]="property"`
+
+[NgClass](https://angular.cn/api/common/NgClass)
+
+[NgStyle](https://angular.cn/api/common/NgStyle)
+
+[@angular/common 里的指令](https://angular.cn/api/common#指令)
+
+### 属性绑定
+
+`[src]="property"`
+
+`[disabled]="property"`
+
+### 事件绑定
+
+`(click)="onClickFunction($event)"`
+
+支持所有 [Events](https://developer.mozilla.org/zh-CN/docs/Web/Events)
+
+`$event` 非必填，但涉及到子组件向父组件通信，发送 `EventEmitter` 事件，必须通过 `$event` 对象来访问载荷。
+
+`$event` 的类型。
+
+传入 `$event` 是靠不住的做法，推荐使用 Angular 的模板引用变量 ( #var )。
+
+### 模板引用变量 ( #var )
+
+`ref-prefix`
+
+`prefix.property`
+
+有点类似 vue 中 ref
+
+### 模板表达式操作符
+
+#### 管道操作符 (|)
+
+[pipe](https://angular.cn/api/core/Pipe)
+
+类似于 vue 中的过滤器
+
+多个管道串联表达式
+
+对管道使用参数
+
+[@angular/common 里的管道](https://angular.cn/api/common#管道)
+
+#### 安全导航操作符 ( ?. ) 和空属性路径
+
+`The current hero's name is {{currentHero.name}}`
+
+当 `currentHero` 为空，会报错。
+
+`The current hero's name is {{currentHero?.name}}`
+
+当 `currentHero` 为空，不会报错，显示为 `The current hero's name is`
+
+当然涉及到这种属性路径是否为空的判断，我们可以用 `NgIf` 或者 `&&`，但显得笨重。
+
+像 `a?.b?.c?.d` 这种就显得很完美。
+
+#### 非空断言操作符（!)
+
+``` html
+<!--No hero, no text -->
+<div *ngIf="hero">
+  The hero's name is {{hero!.name}}
+</div>
+```
+
+与安全导航操作符不同的是，非空断言操作符不会防止出现 null 或 undefined。 它只是告诉 TypeScript 的类型检查器对特定的属性表达式，不做 "严格空值检测"。
+
+如果你打开了严格控制检测 `--strictNullChecks`，那就要用到这个模板操作符，而其它情况下则是可选的。
+
+### 类型转换函数 $any （$any( <表达式> )）
+
+有时候，绑定表达式可能会报类型错误，并且它不能或很难指定类型。要消除这种报错，你可以使用 $any 转换函数来把表达式转换成 any 类型。
+
+``` html
+<!-- Accessing an undeclared member -->
+<div>
+  The hero's marker is {{$any(hero).marker}}
+</div>
+```
+
+在这个例子中，当 Angular 编译器把模板转换成 TypeScript 代码时，$any 表达式可以防止 TypeScript 编译器报错说 marker 不是 Hero 接口的成员。
+
+$any 转换函数可以在绑定表达式中任何可以进行方法调用的地方使用。
+
+?
+
+## 生命周期钩子
+
+
 
 ## 组件之间通信
+
+所有的组件都是指令。
 
 在子组件中用 `@Input` 装饰器来让某个属性可以在父组件中绑定，类似 `props`。在父组件用 `属性绑定` 语法来让父组件控制子组件。
 
 例如在父组件 `<app-hero>` 调用子组件 `<app-hero-detail>`：
 
-`<app-hero-detail [hero]="selectedHero"></app-hero-detail>`
+`<app-hero-detail [hero]="selectedHero" (editRequest)="editHero($event)"></app-hero-detail>`
 
-这代表父组件中参数 `selectedHero` 跟子组件中参数 `hero` 绑定。
+这代表父组件中参数 `selectedHero` 跟子组件中参数 `hero` 绑定，表父组件中事件 `editHero` 来接收子组件中 `EventEmitter` 事件 `editRequest` 传递的值。
+
+[EventEmitter](https://angular.cn/api/core/EventEmitter)
 
 ## service
 
@@ -122,6 +286,10 @@ HttpClient 是 Angular 通过 HTTP 与远程服务器通讯的机制。
   import { HttpClientModule } from '@angular/common/http';
   ```
 * 把它加入 `@NgModule.imports` 数组。
+
+xhr 与 fetch 的区别
+
+在 angular 中使用 fetch (isomorphic-fetch)
 
 ## proxy
 

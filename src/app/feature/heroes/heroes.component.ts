@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FetchService } from '@app/core/fetch.service';
 import api from '@app/core/api';
 import { HeroService } from '@app/core/hero.service';
-import { Hero } from '@app/utils/hero';
+import { Hero } from '@app/shared/utils/hero';
 
 @Component({
   selector: 'app-heroes',
@@ -19,8 +19,7 @@ export class HeroesComponent implements OnInit {
   constructor (
     private fetchService: FetchService,
     private heroService: HeroService
-  ) {
-  }
+  ) { }
 
   ngOnInit () {
     this.getData();
@@ -43,6 +42,10 @@ export class HeroesComponent implements OnInit {
     });
 
     console.log(res1);
+
+    // const res2 = fetch('/');
+    //
+    // console.log(res2);
   }
 
   getHeroes (): void {
@@ -53,6 +56,10 @@ export class HeroesComponent implements OnInit {
 
   onSelect (hero: Hero): void {
     this.selectedHero = hero;
+  }
+
+  editHero (hero: Hero): void {
+    console.log(hero);
   }
 
 }

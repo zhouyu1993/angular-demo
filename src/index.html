@@ -10,5 +10,18 @@
 </head>
 <body>
   <app-root></app-root>
+  <script>
+    (function () {
+      // Set fontSize for rem
+      function rem () {
+        var html = document.documentElement
+        var width = Math.min(html.getBoundingClientRect().width, 500)
+        var fontSize = width * 100 / 750 + 'px'
+        html.style.fontSize = fontSize
+      }
+      rem()
+      window.onresize = function () { rem() }
+    })()
+  </script>
 </body>
 </html>

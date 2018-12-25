@@ -1,0 +1,25 @@
+<div class="home-wrapper">
+  <div class="search">
+    <input class="search-input" placeholder="歌名、歌词、歌手、专辑" type="search" #search (focus)="onFocus()" (keyup.enter)="onEnter(search.value)" [(ngModel)]="keyword">
+    <button class="search-cancel" type="button" [ngClass]="{ 'layout-hidden': !searching }" (click)="onCancel()">取消</button>
+  </div>
+  <ul class="hotkey" *ngIf="hotkey.length" [ngClass]="{ 'layout-hidden': searching || song_info?.total }">
+    <li class="special_key" *ngIf="special_key && special_url"><a href="{{special_url}}" target="_blank">{{special_key}}</a></li>
+    <li *ngFor="let item of hotkey;" (click)="goSearch(item.k)">{{item.k}}</li>
+  </ul>
+  <div class="history" *ngIf="history.length" [ngClass]="{ 'layout-hidden': !searching || song_info?.total }">
+    <ul class="history-list">
+      <li *ngFor="let item of history;" (click)="goSearch(item)">{{item}}</li>
+    </ul>
+    <button class="history-clear" type="button" (click)="onClear()">清除历史记录</button>
+  </div>
+  <div class="song" *ngIf="song_info?.total">
+    <h1>共有{{song_info?.total}}首</h1>
+    <ul class="song-list">
+      <li *ngFor="let item of song_info?.song_list;" (click)="getSong(item.song_id)">{{item.title}}</li>
+    </ul>
+  </div>
+  <div class="play-control" *ngIf="song.file_link">
+    <audio src="{{song.file_link}}" controls autoplay></audio>
+  </div>
+</div>

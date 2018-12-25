@@ -9,8 +9,8 @@
       "@app/*": [
         "src/app/*"
       ],
-      "@components/*": [
-        "src/app/components/*"
+      "@assets/*": [
+        "src/assets/*"
       ]
     },
     "outDir": "./dist/out-tsc",

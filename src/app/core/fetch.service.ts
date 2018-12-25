@@ -22,7 +22,7 @@ export class FetchService {
     private http: HttpClient,
   ) {
     this.cookie = this.getCookie();
-    console.log(this.cookie, this);
+    console.log(this.cookie);
   }
 
   get (url: string, options?: any): Promise<any> {

@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { Hero } from '@app/utils/hero';
+import { Hero } from '@app/shared/utils/hero';
 
 @Component({
   selector: 'app-hero-detail',
@@ -10,11 +10,16 @@ import { Hero } from '@app/utils/hero';
 export class HeroDetailComponent implements OnInit {
 
   @Input() hero: Hero;
+  @Output() editRequest = new EventEmitter<Hero>();
 
   constructor () {
   }
 
   ngOnInit () {
+  }
+
+  edit (): void {
+    this.editRequest.emit(this.hero);
   }
 
 }

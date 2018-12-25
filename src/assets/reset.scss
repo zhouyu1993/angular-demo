@@ -1,0 +1,181 @@
+// 隐藏滚动条
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  background-color: transparent;
+}
+
+// 获取焦点的元素无外边框
+:focus {
+  outline: 0;
+}
+
+// 可输入元素的字段预期值的提示信息
+::-webkit-input-placeholder {
+  color: #999;
+}
+
+::-moz-placeholder {
+  color: #999;
+}
+
+:-ms-input-placeholder {
+  color: #999;
+}
+
+// 去除搜索按钮的清除按钮
+::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+// 重置上传按钮样式
+::-webkit-file-upload-button {
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-size: 12px;
+  color: #121212;
+  vertical-align: top;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 0;
+  outline: 0;
+}
+
+// 元素的内边距和边框将在已设定的宽度和高度内进行绘制
+::before {
+  box-sizing: border-box;
+}
+
+::after {
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  // 设置页面的 offsetHeight 值为屏幕高度
+  height: 100%;
+}
+
+html {
+  // 禁止 x 轴滚动
+  overflow-x: hidden;
+  // 允许 y 轴滚动
+  overflow-y: scroll;
+  // 字体大小 100%
+  text-size-adjust: 100%;
+  // 字体禁选
+  user-select: none;
+  // 浏览器只允许进行滚动和持续缩放操作，禁止双击缩放
+  touch-action: manipulation;
+  // 字体灰介平滑 -webkit- 私有
+  -webkit-font-smoothing: antialiased;
+  // 可点击元素的高亮颜色 -webkit- 私有
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  // 行高为 1
+  line-height: 1.5;
+  // 单词断行
+  word-break: break-all;
+}
+
+body, button, input, select, textarea {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-size: 12px;
+  color: #121212;
+}
+
+body, dd, dl, figure, h1, h2, h3, h4, h5, h6, ol, p, ul {
+  margin: 0;
+}
+
+button, input, ol, textarea, ul {
+  padding: 0;
+}
+
+a, button, em , i, iframe, img, input, select, textarea {
+  vertical-align: top;
+}
+
+button, iframe, img, input, select, textarea {
+  border: 0;
+}
+
+button, input, select, textarea {
+  line-height: 1.5;
+  background-color: #fff;
+  border-radius: 0;
+  appearance: none;
+}
+
+textarea {
+  resize: none;
+}
+
+ol, ul {
+  list-style-type: none;
+}
+
+a {
+  color: #121212;
+  text-decoration: none;
+}
+
+address, em , i {
+  font-style: normal;
+}
+
+img {
+  max-width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+}
+
+.clear-float {
+  zoom: 1;
+
+  &::after {
+    display: block;
+    height: 0;
+    clear: both;
+    content: '';
+    visibility: hidden;
+  }
+}
+
+.layout-flex {
+  display: flex;
+
+  &-ac {
+    display: flex;
+    align-items: center;
+  }
+
+  &-acjc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-acjs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.layout-hidden {
+  display: none!important;
+}
+
+.lazy-loading {
+  background: url(https://cmspic-10004025.image.myqcloud.com/48428ea0-7ab9-11e8-9f6d-b92c9702d6e7_size_64x64#gif) center no-repeat;
+  background-size: rem(128) rem(128);
+}
