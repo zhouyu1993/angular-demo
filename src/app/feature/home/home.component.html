@@ -19,7 +19,8 @@
       <li *ngFor="let item of song_info?.song_list;" (click)="getSong(item.song_id)">{{item.title}}</li>
     </ul>
   </div>
-  <div class="play-control" *ngIf="song.file_link">
-    <audio src="{{song.file_link}}" controls autoplay></audio>
-  </div>
+  <!-- <div class="play-control" *ngIf="song.file_link">
+    <audio src="{{song.file_link}}" autoplay controls preload></audio>
+  </div> -->
+  <iframe id="iframeaudio" style="display:none;"></iframe>
 </div>

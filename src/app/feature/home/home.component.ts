@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FetchService } from '@app/core/fetch.service';
+import { HttpService } from '@app/core/http.service';
 import api from '@app/core/api';
+
+declare const window;
 
 @Component({
   selector: 'app-home',
@@ -18,22 +21,34 @@ export class HomeComponent implements OnInit {
   keyword = '';
   song_info = {};
   song = {};
+  loading = false;
+  playing = false;
+  duration = 0;
+  currentTime = 0;
+  progress = '0%';
 
   constructor (
     private fetchService: FetchService,
+    private httpService: HttpService,
   ) { }
 
   ngOnInit () {
     this.getData();
   }
 
-  getData () {
+  async getData () {
+    console.log(this.fetchService);
+    const res = await this.fetchService.fetch(api.HOTKEY);
+    console.log(res);
+    const res2 = await this.fetchService.fetchJsonp('//apiart.cekid.com/api/v1/article/addReadNum?artId=10025452&uid=&companyId=1&platform=shequ');
+    console.log(res2);
+
     this.getHotkey();
   }
 
   async getHotkey () {
     try {
-      const res = await this.fetchService.get(api.HOTKEY, {
+      const res = await this.httpService.get(api.HOTKEY, {
         // withCredentials: true,
       });
 
@@ -83,7 +98,7 @@ export class HomeComponent implements OnInit {
     this.saveStorage(keyword);
 
     try {
-      const res = await this.fetchService.get(`${api.SEARCH}?from=webapp_music&format=json&method=baidu.ting.search.merge&query=${keyword}&page_size=20&page_no=0&type=0,1,2,5,7`, {
+      const res = await this.httpService.get(`${api.SEARCH}?from=webapp_music&format=json&method=baidu.ting.search.merge&query=${keyword}&page_size=20&page_no=0&type=0,1,2,5,7`, {
         // withCredentials: true,
       });
 
@@ -128,24 +143,77 @@ export class HomeComponent implements OnInit {
     // http://musicapi.taihe.com/v1/restserver/ting?format=json&from=webapp_music&method=baidu.ting.song.playAAC&songid=591517652
 
     try {
-      const res = await this.fetchService.get(`${api.SEARCH}?format=json&from=webapp_music&method=baidu.ting.song.playAAC&songid=${song_id}`, {
+      const res = await this.httpService.get(`${api.SEARCH}?format=json&from=webapp_music&method=baidu.ting.song.playAAC&songid=${song_id}`, {
         // withCredentials: true,
       });
 
       if (+res.error_code === 22000) {
         const data = res;
 
+        const file_link = data.bitrate && data.bitrate.file_link;
+
         this.song = {
-          file_link: data.bitrate && data.bitrate.file_link,
+          file_link,
           pic_small: data.songinfo && data.songinfo.pic_small,
           title: data.songinfo && data.songinfo.title,
           author: data.songinfo && data.songinfo.author,
         };
 
-        console.log(this.song);
+        try {
+          // 音频直接播放遭遇 403，估计服务端设置了 referer 防盗链机制。设置 iframe 跨域
+          window.iframeaudiocontent = `<audio id="audio" src="${file_link}" autoplay controls preload></audio>`;
+          window.iframeaudio.src = 'javascript:parent.iframeaudiocontent;';
+
+          const audio = window.iframeaudio.contentDocument.getElementsByTagName('audio')[0];
+
+          if (audio) {
+            audio.play();
+
+            audio.addEventListener('play', () => {
+              this.playing = true;
+            });
+
+            audio.addEventListener('pause', () => {
+              this.playing = false;
+            });
+
+            audio.addEventListener('waiting', () => {
+              this.loading = true;
+
+              audio.play();
+            });
+
+            audio.addEventListener('loadstart', () => {
+              this.loading = true;
+
+              audio.play();
+            });
+
+            audio.addEventListener('durationchange', () => {
+              this.duration = (audio.duration || 0) * 1000;
+            });
+
+            audio.addEventListener('canplaythrough', () => {
+              this.loading = false;
+            });
+
+            audio.addEventListener('timeupdate', () => {
+              this.duration = (audio.duration || 0) * 1000;
+              this.currentTime = audio.currentTime * 1000;
+              this.progress = audio.duration ? audio.currentTime / audio.duration * 100 + '%' : '0%';
+            });
+
+            audio.addEventListener('error', () => {
+              this.loading = false;
+            });
+          }
+        } catch (e) {
+          console.log(e);
+        }
       }
 
       console.log(res);
+
     } catch (e) {
       console.log(e);
     }

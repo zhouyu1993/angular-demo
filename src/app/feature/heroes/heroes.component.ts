@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { FetchService } from '@app/core/fetch.service';
-import api from '@app/core/api';
+// import { HttpService } from '@app/core/http.service';
+// import api from '@app/core/api';
 import { HeroService } from '@app/core/hero.service';
 import { Hero } from '@app/shared/utils/hero';
 
@@ -17,7 +17,7 @@ export class HeroesComponent implements OnInit {
   selectedHero: Hero;
 
   constructor (
-    private fetchService: FetchService,
+    // private httpService: HttpService,
     private heroService: HeroService
   ) { }
 
@@ -27,25 +27,10 @@ export class HeroesComponent implements OnInit {
   }
 
   async getData () {
-    this.fetchService.get('https://cms.cekid.com/publish/998/newindex2017.json').then(json => {
-      console.log(json);
-    });
-
-    const res = await this.fetchService.get(api.HOTKEY, {
-      withCredentials: true,
-    });
-
-    console.log(res);
-
-    const res1 = await this.fetchService.get(`${api.SEARCH}?from=webapp_music&format=json&method=baidu.ting.search.merge&query=卡路里&page_size=10&page_no=1`, {
-      withCredentials: true,
-    });
-
-    console.log(res1);
-
-    // const res2 = fetch('/');
-    //
-    // console.log(res2);
+    // this.httpService.get(url)
+    // .then(json => {
+    //   console.log(json);
+    // });
   }
 
   getHeroes (): void {
