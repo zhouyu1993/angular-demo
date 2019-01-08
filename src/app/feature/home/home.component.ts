@@ -40,8 +40,6 @@ export class HomeComponent implements OnInit {
     console.log(this.fetchService);
     const res = await this.fetchService.fetch(api.HOTKEY);
     console.log(res);
-    const res2 = await this.fetchService.fetchJsonp('//apiart.cekid.com/api/v1/article/addReadNum?artId=10025452&uid=&companyId=1&platform=shequ');
-    console.log(res2);
 
     this.getHotkey();
   }
