@@ -31,12 +31,16 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 * angular-demo 工作空间-根目录名
   * e2e 端到端测试项目
   * src 骨架应用项目 [index.html、main.ts、app/app.module]
-    * app 根组件 [app/app.component]
+    * app
+      * app.component 根组件
       * app-router.module 路由器
-    * feature 路由页面
-    * components 组件
-    * core 数据/接口
-
+      * feature 路由页面
+      * shared 组件
+        * components UI组件
+        * utils JS组件
+      * core 数据/接口
+    * assets 静态资源
+    * environments 环境变量
   * .editorconfig 编辑器配置文件
   * .gitignore git忽略提交规则配置文件
   * .npmrc npm配置文件
@@ -48,11 +52,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
   * tsconfig.json TypeScript编译配置文件
   * tslint.json TypeScript代码检测规则配置文件
 
-ts (M 中间器，调用 C 去更新 V)
-
-组件 UI 视图层 (V)
-
-服务 api 数据层 (C)
+JIT 即时编译，AOT 预编译
 
 ## 设置别名 `alias` (类似 webpack)
 
@@ -91,6 +91,14 @@ in `tsconfig.json` :
   # ...
 }
 ```
+
+## TypeScript
+
+[泛型](https://www.typescriptlang.org/docs/handbook/generics.html)
+
+[泛型](https://www.tslang.cn/docs/handbook/generics.html)
+
+`function<T>()`
 
 ## [Component](https://angular.cn/api/core/Component)
 
@@ -262,34 +270,55 @@ $any 转换函数可以在绑定表达式中任何可以进行方法调用的地
 
 给 service 中获取数据的方法提供了一个异步的函数签名
 
+## 启用 HTTP 服务
+
+HttpClient 是 Angular 通过 HTTP 与远程服务器通讯的机制。
+
+要让 HttpClient 在应用中随处可用，请：
+
+  * 打开根模块 AppModule
+  * 从 @angular/common/http 中导入 HttpClientModule 符号
+    ``` js
+    import { HttpClientModule } from '@angular/common/http';
+    ```
+  * 把它加入 `@NgModule.imports` 数组
+
 ## HttpClient
+
+[HttpClient](https://www.angular.cn/api/common/http/HttpClient)
 
 `Angular HttpClient` 的方法会返回 `RxJS` 的 `Observable`。
 
 使用 `RxJS` 的 `Observable` 和 `of()` 函数来模拟从服务器返回数据。
 
-## 路由
+`of()` 函数来可以把数据处理为 `Observable`
 
-添加 AppRoutingModule
+[Observable 可观察对象](https://www.angular.cn/guide/observables)
 
-在一个独立的顶级模块中加载和配置路由器，它专注于路由功能，然后由根模块 AppModule 导入它。
+[RxJS](https://www.angular.cn/guide/rx-library)
 
-## 启用 HTTP 服务
+[Angular 中的 Observable 可观察对象](https://www.angular.cn/guide/observables-in-angular)
 
-HttpClient 是 Angular 通过 HTTP 与远程服务器通讯的机制。
+### [RxJS](https://github.com/reactivex/rxjs)
 
-要让 HttpClient 在应用中随处可用，请
+观察者模式、迭代器模式
 
-* 打开根模块 AppModule，
-* 从 @angular/common/http 中导入 HttpClientModule 符号，
-  ``` js
-  import { HttpClientModule } from '@angular/common/http';
-  ```
-* 把它加入 `@NgModule.imports` 数组。
+`RxJS` 是基于观察者模式和迭代器模式以函数式编程思维来实现的。`RxJS` 中含有两个基本概念：`Observables` 与 `Observer`。`Observables` 作为被观察者，是一个值或事件的流集合；而 `Observer` 则作为观察者，根据 `Observables` 进行处理。
 
-xhr 与 fetch 的区别
+`Observables` 与 `Observer` 之间的订阅发布关系(观察者模式) 如下：
 
-在 angular 中使用 fetch (isomorphic-fetch)
+  * 订阅：`Observer` 通过 `Observable` 提供的 `subscribe()` 方法订阅 `Observable`。
+  * 发布：`Observable` 通过回调 `next` 方法向 `Observer` 发布事件。
+
+### 在 angular 中使用 fetch
+
+[Observable 与 Promise](https://www.angular.cn/guide/comparing-observables)
+
+[fetch 和 xhr/ajax 的区别](https://www.jianshu.com/p/71f756103df8)
+
+[传统 Ajax 已死，Fetch 永生](https://github.com/camsong/blog/issues/2)
+
+[isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch)
 
 ## proxy
 
@@ -298,6 +327,33 @@ xhr 与 fetch 的区别
 [webpack-devserver-proxy](https://webpack.js.org/configuration/dev-server/#devserver-proxy)
 
 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware)
+
+## 路由
+
+添加 AppRoutingModule
+
+在一个独立的顶级模块中加载和配置路由器，它专注于路由功能，然后由根模块 AppModule 导入它。
+
+``` js
+// Routes 路由器配置，type Routes = Route[]
+// RouterModule 添加路由器指令和服务提供商
+import { Routes, RouterModule } from '@angular/router';
+```
+
+``` js
+// 与当前组件相关的路由信息
+import { ActivatedRoute } from '@angular/router';
+
+const route = ActivatedRoute
+
+// route.paramMap 返回 Observable<ParamMap>
+route.paramMap.subscribe(params => {
+  console.log(params.get('id'))
+})
+
+// route.snapshot.paramMap
+console.log(route.snapshot.paramMap.get('id'))
+```
 
 # More
 

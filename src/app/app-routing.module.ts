@@ -26,6 +26,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  // RouterModule.forRoot(routes: Route[], config?: ExtraOptions) 创建一个带有所有路由器服务提供商和指令的模块。它还可以（可选的）设置一个应用监听器，来执行首次导航
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })

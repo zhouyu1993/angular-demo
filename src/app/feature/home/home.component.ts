@@ -38,7 +38,9 @@ export class HomeComponent implements OnInit {
 
   async getData () {
     console.log(this.fetchService);
-    const res = await this.fetchService.fetch(api.HOTKEY);
+    const res = await this.fetchService.fetch(api.HOTKEY, {}, {
+      // withCredentials: true,
+    });
     console.log(res);
 
     this.getHotkey();
