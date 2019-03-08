@@ -94,7 +94,13 @@ in `tsconfig.json` :
 
 ## TypeScript
 
-[泛型](https://www.typescriptlang.org/docs/handbook/generics.html)
+[基础类型](https://www.tslang.cn/docs/handbook/basic-types.html)
+
+[接口](https://www.tslang.cn/docs/handbook/interfaces.html)
+
+[类](https://www.tslang.cn/docs/handbook/classes.html)
+
+[函数](https://www.tslang.cn/docs/handbook/functions.html)
 
 [泛型](https://www.tslang.cn/docs/handbook/generics.html)
 
@@ -242,9 +248,17 @@ $any 转换函数可以在绑定表达式中任何可以进行方法调用的地
 
 ?
 
-## 生命周期钩子
+## [生命周期钩子](https://www.angular.cn/guide/lifecycle-hooks)
 
+`ngOnChanges()` 在 ngOnInit() 之前以及所绑定的一个或多个输入属性的值发生变化时都会调用
 
+`ngOnInit()` 初始化指令/组件，在第一轮 ngOnChanges() 完成之后调用，只调用一次
+
+`ngAfterViewInit()` 每当 Angular 初始化完组件视图及其子视图之后调用，只调用一次
+
+`ngOnDestroy()` 垃圾回收 以防内存泄漏
+
+等等
 
 ## 组件之间通信
 

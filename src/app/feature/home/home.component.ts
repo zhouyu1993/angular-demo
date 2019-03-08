@@ -13,19 +13,19 @@ declare const window;
 })
 export class HomeComponent implements OnInit {
 
-  special_key = '';
-  special_url = '';
-  hotkey = [];
-  history = [];
-  searching = false;
-  keyword = '';
-  song_info = {};
-  song = {};
-  loading = false;
-  playing = false;
-  duration = 0;
-  currentTime = 0;
-  progress = '0%';
+  special_key: string = '';
+  special_url: string = '';
+  hotkey: any = [];
+  history: any = [];
+  searching: boolean = false;
+  keyword: string = '';
+  song_info: any = {};
+  song: any = {};
+  loading: boolean = false;
+  playing: boolean = false;
+  duration: number = 0;
+  currentTime: number = 0;
+  progress: string = '0%';
 
   constructor (
     private fetchService: FetchService,
@@ -89,16 +89,16 @@ export class HomeComponent implements OnInit {
     this.song_info = {};
   }
 
-  onEnter (value) {
+  onEnter (value: string) {
     this.goSearch(value);
   }
 
-  async goSearch (keyword) {
-    this.keyword = keyword;
-    this.saveStorage(keyword);
+  async goSearch (value: string) {
+    this.keyword = value;
+    this.saveStorage(value);
 
     try {
-      const res = await this.httpService.get(`${api.SEARCH}?from=webapp_music&format=json&method=baidu.ting.search.merge&query=${keyword}&page_size=20&page_no=0&type=0,1,2,5,7`, {
+      const res = await this.httpService.get(`${api.SEARCH}?from=webapp_music&format=json&method=baidu.ting.search.merge&query=${value}&page_size=20&page_no=0&type=0,1,2,5,7`, {
         // withCredentials: true,
       });
 
@@ -121,25 +121,25 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  saveStorage (keyword) {
-    if (keyword && localStorage) {
+  saveStorage (value: string) {
+    if (value && localStorage) {
       let historyArray = [];
 
       const history = localStorage.getItem('history');
       if (history) {
         historyArray = JSON.parse(history) || [];
-        historyArray.push(keyword);
+        historyArray.push(value);
         const historySet = new Set(historyArray);
         historyArray = Array.from(historySet);
       } else {
-        historyArray.push(keyword);
+        historyArray.push(value);
       }
 
       localStorage.setItem('history', JSON.stringify(historyArray));
     }
   }
 
-  async getSong (song_id) {
+  async getSong (song_id: number) {
     // http://musicapi.taihe.com/v1/restserver/ting?format=json&from=webapp_music&method=baidu.ting.song.playAAC&songid=591517652
 
     try {
